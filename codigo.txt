@@ -1,0 +1,64 @@
+    if new_state == 5:
+      print("¡Objetivo alcanzado")
+    else:
+      print(f"Estado anterior: {current_state} Nuevo estado: {new_state}")
+    return new_state
+------------------------------------------------------------------------------------
+    #print("Ejecutando...")
+    new_state = take_action(initial_state, reward_matrix, gamma)
+
+    while True:
+      if new_state == 5:
+        break
+      else:
+        new_state = take_action(new_state, reward_matrix, gamma)
+-------------------------------------------------------------------------------------
+    for episode in range(episodes):
+      print("Episodio inicial: ", episode)
+
+      #Establecer estado inicial
+      initial_state = set_initial_state()
+      print("Estado inicial: ", initial_state)
+
+      if initial_state!=5:
+        #Inicializar episodio(Obtener una acción, tomar una acción para ob
+tener un nuevo estado)
+        run_episode(initial_state, reward_matrix, gamma)
+
+      print("Episodio final: ", episode)
+-----------------------------------------------------------------------------------------------
+gamma = 0.8
+#Obten la tabla - Q
+q_table = train(2, rewards, gamma)
+print("Tabla-Q final: ", q_table) 
+-------------------------------------------------------------------------------------
+def optimal_path(q_table):
+    path=[]
+    reward = []
+    total_reward = 0
+    initial_state = set_initial_state()
+
+    print(initial_state)
+----------------------------------------------------------------------------------
+    max_value_index = np.argmax(q_table[initial_state])
+    max_value = np.max(q_table[initial_state])
+
+    path.append(max_value_index)
+    reward.append(max_value)
+--------------------------------------------------------------------------------------
+    while max_value !=5:
+      max_value_index = np.argmax(q_table[max_value_index])
+      max_value = np.argmax(q_table[max_value_index])
+
+      path.append(max_value_index)
+      reward.append(max_value)
+    
+    total_reward = sum(reward)
+
+    return path, total_reward
+-------------------------------------------------------------------------------------
+Q_optimal_path, max_reward = optimal_path(q_table)
+print(Q_optimal_path, max_reward)
+------------------------------------------------------------------------------
+
+
